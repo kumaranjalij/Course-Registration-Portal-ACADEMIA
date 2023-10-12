@@ -10,8 +10,8 @@ struct student
 	
 	//login credentials
 	char stud_login_id[15]; 
-	char stud_passwd[10];
-	int courses[5]; //couse array-max 5 courses
+	char stud_passwd[12];
+	int courses[5]; //course array-max 5 courses
 	int n_courses;	//no. of courses
 	int stud_login_status;	
 };
@@ -24,11 +24,11 @@ struct faculty
 	char fac_name[20];
 	char fac_addr[30];
 	char fac_email[20];
-	char fac_dept[3];
+	char fac_dept[4];
 
 	//login credentials
 	char fac_login_id[10];;
-	char fac_passwd[10];
+	char fac_passwd[12];
 	int courses_offered[3];	//max 3 courses
 	int n_courses_offered; //no. of courses offered
 	int fac_login_status;

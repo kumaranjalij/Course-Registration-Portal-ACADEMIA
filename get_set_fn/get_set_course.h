@@ -10,25 +10,25 @@
 
 int main()
 {
-	//get student details
-	struct student get_stud_details(int stud_id)
+	//get course details
+	struct course get_course_details(int c_id)
 	{
 		int fd, bytes_read, bytes_write, offset;
 		
-		struct student stud;
+		struct course C;
 		
-		fd = open("../records/stud.txt", O_RDONLY);
+		fd = open("../records/course.txt", O_RDONLY);
 		if(fd == -1)
 		{
 			perror("Unable to open file");
-			return (struct student){-1,"NULL","NULL","NULL","NULL","NULL",{0,0,0,0,0,},0,0};
+			return (struct course){-1,"NULL",-1,0,0,0};
 		}
 
-		offset = lseek(fd, stud_id*(sizeof(struct student)), SEEK_SET);
+		offset = lseek(fd, c_id*(sizeof(struct course)), SEEK_SET);
 		if(offset == -1)
 		{
 			perror(" ");
-			return (struct student){-1,"NULL","NULL","NULL","NULL","NULL",{0,0,0,0,0,},0,0};
+			return (struct course){-1,"NULL",-1,0,0,0};
 		}
 
 		//Locking
@@ -36,19 +36,19 @@ int main()
 
 		lock.l_type = F_RDLCK;
 		lock.l_whence = SEEK_SET;
-    	   	lock.l_start = stud_id*(sizeof(struct student));
- 	      	lock.l_len = sizeof(struct student);
+    	   	lock.l_start = c_id*(sizeof(struct course));
+ 	      	lock.l_len = sizeof(struct course);
        		lock.l_pid = getpid();
 
 		int ret = fcntl(fd, F_SETLKW, &lock);
 		if(ret == -1)
 		{
 			perror("Error in locking..\n");
-			return (struct student){-1,"NULL","NULL","NULL","NULL","NULL",{0,0,0,0,0,},0,0};
+			return (struct course){-1,"NULL",-1,0,0,0};
 		}
 		
 		//critical section
-		bytes_read = read(fd, &stud, sizeof(stud));
+		bytes_read = read(fd, &C, sizeof(C));
 
 		//unlocking
 		lock.l_type = F_UNLCK;
@@ -57,22 +57,22 @@ int main()
 		if(bytes_read <= 0)
 		{
 			perror("Failed reading the record..\n");
-			return (struct student){-1,"NULL","NULL","NULL","NULL","NULL",{0,0,0,0,0,},0,0};
+			return (struct course){-1,"NULL",-1,0,0,0};
                 }
 		
 		close(fd);
-		return stud;
+		return C;
 	}
 
-	//update student details
-	int set_stud_details(int studid, struct student *stud)
+	//update course details
+	int set_course_details(int cid, struct course *C)
 	{
 		int fd, bytes_read, bytes_write, offset;
 
 		//call by ref
-		stud->stud_id = studid;
+		C->course_id = cid;
 
-		fd = open("../records/stud.txt", O_WRONLY);
+		fd = open("../records/course.txt", O_WRONLY);
 
 		if(fd == -1)
 		{
@@ -80,7 +80,7 @@ int main()
 			return 0;
 		}
 
-		offset = lseek(fd, studid*sizeof(struct student), SEEK_SET);
+		offset = lseek(fd, cid*sizeof(struct course), SEEK_SET);
 		if(offset == -1)
 		{
 			perror(" ");
@@ -92,8 +92,8 @@ int main()
 
                 lock.l_type = F_WRLCK;
                 lock.l_whence = SEEK_SET;
-                lock.l_start = studid*(sizeof(struct student));
-                lock.l_len = sizeof(struct student);
+                lock.l_start = cid*(sizeof(struct course));
+                lock.l_len = sizeof(struct course);
                 lock.l_pid = getpid();
 
                 int ret = fcntl(fd, F_SETLKW, &lock);
@@ -104,7 +104,7 @@ int main()
                 }
 
 		//critical section
-		bytes_write = write(fd, &(*stud), sizeof(*stud));
+		bytes_write = write(fd, &(*C), sizeof(*C));
 
 		//unlocking
                 lock.l_type = F_UNLCK;
@@ -120,25 +120,25 @@ int main()
 		return 1;
 	}
 
-	//Save new student
-	int save_new_student(struct student *stud)
+	//Add new Course
+	int save_new_course(struct course *C)
 	{
-		int studid;
+		int cid;
 		int fd, bytes_read, bytes_write, offset;
 
-		//get id of next student
+		//get id of next course
 		struct record rec;
 		int fd1;
 		fd1 = open("../records/record.txt", O_RDONLY);
 		lseek(fd1, 0, SEEK_SET);
 		read(fd1, &rec, sizeof(rec));
-		studid = rec.next_stud;
+		cid = rec.next_course;
 		close(fd1);
 		
 
-		stud->stud_id = studid;
+		C->course_id = cid;
 
-		fd = open("../records/stud.txt", O_WRONLY | O_CREAT, 0777);
+		fd = open("../records/course.txt", O_WRONLY | O_CREAT, 0777);
 
                 if(fd == -1)
                 {
@@ -146,7 +146,7 @@ int main()
                         return -1;
                 }
 
-                offset = lseek(fd, studid*sizeof(struct student), SEEK_SET);
+                offset = lseek(fd, cid*sizeof(struct course), SEEK_SET);
                 if(offset == -1)
                 {
                         perror(" ");
@@ -158,8 +158,8 @@ int main()
 
                 lock.l_type = F_WRLCK;
                 lock.l_whence = SEEK_SET;
-                lock.l_start = studid*(sizeof(struct student));
-                lock.l_len = sizeof(struct student);
+                lock.l_start = cid*(sizeof(struct course));
+                lock.l_len = sizeof(struct course);
                 lock.l_pid = getpid();
 
                 int ret = fcntl(fd, F_SETLKW, &lock);
@@ -170,7 +170,7 @@ int main()
                 }
 
 		//critical section
-                bytes_write = write(fd, &(*stud), sizeof(*stud));
+                bytes_write = write(fd, &(*C), sizeof(*C));
 
                 //unlocking
                 lock.l_type = F_UNLCK;
@@ -184,8 +184,7 @@ int main()
 
                 close(fd);
                 return 1;
-        }
-
+	}
 }
 		
 
