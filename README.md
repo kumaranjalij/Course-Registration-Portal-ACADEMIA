@@ -12,7 +12,10 @@ The project has the following **functionalities**:
 
 **Admin functionaities** include:
 - Add Student
+- Add Student details
 - Add Faculty
+- Add Faculty details
+- Display Student/Faculty details
 - Activate/Deactivate Student
 - Update Student/Faculty details
 - Exit
@@ -27,6 +30,7 @@ The project has the following **functionalities**:
 **Faculty functionalities** include:
 - Add new Course
 - Remove offered Course
+- View offered Courses
 - View enrollments in Courses
 - Password Change
 - Exit
