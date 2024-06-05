@@ -29,7 +29,7 @@ if(wrlock==-1){
 }
 
 myadmin.id=0;
-strcpy(myadmin.name,"Riya Patidar");
+strcpy(myadmin.name,"Anjali");
 strcpy(myadmin.login_id,"admin");
 strcpy(myadmin.password,"admin");
 int writeBytes=write(fd,&myadmin,sizeof(myadmin));
