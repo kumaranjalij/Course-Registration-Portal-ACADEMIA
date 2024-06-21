@@ -30,32 +30,24 @@ The objective of this project is to develop a user-friendly and multifunctional 
 
 
 
-## File Structure - review this later
+## File Structure
 
-```bash
+```plaintext
 ACADEMIA/
-├── client.c             # Client-side code handling user interactions
-├── server.c             # Server-side code managing client requests and database operations
-├── admin.c              # Functions specific to the admin role
-├── faculty.c            # Functions specific to the faculty role
-├── student.c            # Functions specific to the student role
-├── common.c             # Common functions used across different roles
-├── database.c           # Database operations for reading/writing data files
-├── lock.c               # Implements file locking mechanisms
-├── utilities.c          # Utility functions for input validation, formatting, etc.
-├── set_record.c         # Initializes the database with sample records
-├── set_admin.c          # Sets up the initial admin account
-├── include/
-│   ├── admin.h          # Header file for admin functions
-│   ├── faculty.h        # Header file for faculty functions
-│   ├── student.h        # Header file for student functions
-│   ├── common.h         # Header file for common functions
-│   ├── database.h       # Header file for database functions
-│   ├── lock.h           # Header file for locking mechanisms
-│   ├── utilities.h      # Header file for utility functions
-└── README.md            # Project documentation (this file)
+├── Getter_Setter/        # Contains functions for getting and setting data fields
+├── Libs/                 # Holds external or custom libraries used by the project
+├── Record_File/          # Stores data files used by the application
+├── client.c              # Implements the client-side application
+├── server.c              # Implements the server-side application
+├── set_record.c          # Initializes the database with sample records
+├── set_admin.c           # Sets up the initial admin account
+├── file_structures.h     # Defines the data structures used in the project
+├── get_record.c          # Contains functions to retrieve records from the database
+└── my_function.h         # Declares utility functions used across the project
 
 ```
+
+
 ## Run Locally
 
 Clone the project
@@ -76,6 +68,10 @@ Initialize records and admin account
   gcc -o set_record set_record.c
   ./set_record
 
+```
+Set up admin account
+
+```bash
   gcc -o set_admin set_admin.c
   ./set_admin
 
@@ -97,12 +93,19 @@ Compile and run the client
 
 ```
 
-## Documentation - create one explaining steps
+## Documentation - create one explaining steps and mechanisms
 
 [Documentation](https://linktodocumentation)
 
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Initial Connection Setup](https://github.com/kumaranjalij/Course-Registration-Portal-ACADEMIA/blob/main/Screenshots/Pasted%20image.png)
+
+![Communication establishment](https://github.com/kumaranjalij/Course-Registration-Portal-ACADEMIA/blob/main/Screenshots/Pasted%20image%201.png)
+
+![Admin functionalities](https://github.com/kumaranjalij/Course-Registration-Portal-ACADEMIA/blob/main/Screenshots/Screenshot%20from%202024-06-20%2015-16-27.png)
+
+![Student functionalities](https://github.com/kumaranjalij/Course-Registration-Portal-ACADEMIA/blob/main/Screenshots/Pasted%20image%205.png)
+
 
