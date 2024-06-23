@@ -93,11 +93,6 @@ Compile and run the client
 
 ```
 
-## Documentation - create one explaining steps and mechanisms
-
-[Documentation](https://linktodocumentation)
-
-
 ## Screenshots
 
 ![Initial Connection Setup](https://github.com/kumaranjalij/Course-Registration-Portal-ACADEMIA/blob/main/Screenshots/Pasted%20image.png)
